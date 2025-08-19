@@ -1,6 +1,6 @@
 # Activity 1
 
-- This is **activity 1**... 
+- This is **activity 1** :sunglasses: ... 
 
 ## Emoji
 [My Cheatsheet](https://github.com/ikatyang/emoji-cheat-sheet)
@@ -45,4 +45,5 @@ public class CodeBlock {
     }
 }
 ```
+
 
