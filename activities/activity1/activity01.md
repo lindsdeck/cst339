@@ -9,34 +9,34 @@
 
 - This is a screenshot of the Spring Tool Suite About Box
 
-![Spring Tool Suite About Box](C:\git\cst339\activities\activity1\SpringBoot.png)
+![Spring Tool Suite About Box](./SpringBoot.png)
 
 - This is a screenshot of the Console Output
 
-![Console Output](C:\git\cst339\activities\activity1\Spring.png)
+![Console Output](./Spring.png)
 
 - This is a screenshot of the Whitelabel Error Page
 
-![ White label Erro Page](C:\git\cst339\activities\activity1\Whitelabelerror.png)
+![ White label Error Page](./Whitelabelerror.png)
 
 - This is a screenshot of the Hello World **index.html** page
 
-![Hello World - Index Page](C:\git\cst339\activities\activity1\Hello-localhost.png)
+![Hello World - Index Page](./Hello-localhost.png)
 
 ## Part 2
 
 - This is a screenshot of the Maven Build configurations as well as showing the hellowrold.jar file
 
-![Maven Build](C:\git\cst339\activities\activity1\Jarfile.png)
+![Maven Build](./Jarfile.png)
 
 
 - This is a screenshot of the Java ARchive (JAR) file Execution at local host8080
 
-![JAR Execution](C:\git\cst339\activities\activity1\80802.png)
+![JAR Execution](./80802.png)
 
 - This is a screenshot of the Hello World  index.html page
 
-![Maven Console](C:\git\cst339\activities\activity1\helloworldhtml.png)
+![Maven Console](./helloworldhtml.png)
 
 ### All research questions have been answered within Halo
 
