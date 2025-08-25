@@ -45,7 +45,7 @@ Each product will have:
 
 ## Sitemap
 
-![3DeDeck Sitemap](.\sitemap.png)
+![3DeDeck Sitemap](./sitemap.png)
 
 ## Planning 
 
