@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - 3DeDeck</title>
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif; background: #1a1a1a; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column;
+        }
+
+        .navbar {
+            background: #000000; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 2rem; color: #9d4edd; text-decoration: none;
+        }
+
+        .logo, .auth-tab, .form-label, .form-submit, .nav-link {
+            font-weight: bold; text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .nav-link, .login-box {
+            background: #333333; color: #ffffff; border: 1px solid #333333; padding: 0.8rem 1.5rem; text-decoration: none;
+        }
+
+        .login-container {
+            flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem;
+        }
+
+        .login-box {
+            padding: 3rem; width: 100%; max-width: 450px;
+        }
+
+        .login-title {
+            text-align: center; font-size: 2.5rem; color: #9d4edd; margin-bottom: 2rem;
+        }
+
+        .auth-tab {
+            flex: 1; background: #1a1a1a; color: #ffffff; border: none; padding: 1rem; cursor: pointer;
+        }
+
+        .auth-tab.active, .form-submit {
+            background: #9d4edd; color: #ffffff; border: 1px solid #9d4edd;
+        }
+
+        .auth-toggle {
+            display: flex; margin-bottom: 2rem; border: 1px solid #333333;
+        }
+
+        .form-input {
+            width: 100%; background: #1a1a1a; border: 1px solid #333333; color: #ffffff; padding: 0.8rem; font-size: 1rem;
+        }
+
+        .form-submit {
+            width: 100%; padding: 1rem; font-size: 1.1rem; cursor: pointer; margin-top: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block; margin-bottom: 0.5rem; color: #e0e0e0; font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .footer {
+            background: #000000; padding: 2rem; text-align: center; border-top: 1px solid #333; color: #e0e0e0;
+        }
+
+        .error {
+            color: #e74c3c; font-size: 0.9rem; margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .login-box {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .login-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">3DeDeck</a>
+        <div>
+            <a href="/" class="nav-link">Home</a>
+        </div>
+    </nav>
+
+    <div class="login-container">
+        <div class="login-box">
+            <h1 class="login-title">Login</h1>
+            
+            <div class="auth-toggle">
+                <button class="auth-tab active" id="signinTab" onclick="switchTab('signin')">Sign In</button>
+                <button class="auth-tab" id="registerTab" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <form class="auth-form" id="signinForm" th:action="@{/login/doLogin}" method="post" th:object="${loginModel}">
+                <div class="form-group">
+                    <label class="form-label" for="signinUsername">Username</label>
+                    <input type="text" class="form-input" id="signinUsername" name="username" th:field="*{username}" required>
+                    <div th:if="${#fields.hasErrors('username')}" class="error" th:errors="*{username}"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="signinPassword">Password</label>
+                    <input type="password" class="form-input" id="signinPassword" name="password" th:field="*{password}" required>
+                    <div th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}"></div>
+                </div>
+                <button type="submit" class="form-submit">Sign In</button>
+            </form>
+
+            <!-- Register Form -->
+            <form class="auth-form hidden" id="registerForm" th:action="@{/login/doRegister}" method="post" th:object="${loginModel}">
+                <div class="form-group">
+                    <label class="form-label" for="registerFirstName">First Name</label>
+                    <input type="text" class="form-input" id="registerFirstName" name="firstName" th:field="*{firstName}" required>
+                    <div th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="registerLastName">Last Name</label>
+                    <input type="text" class="form-input" id="registerLastName" name="lastName" th:field="*{lastName}" required>
+                    <div th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="registerPhone">Phone Number</label>
+                    <input type="tel" class="form-input" id="registerPhone" name="phone" th:field="*{phone}" required>
+                    <div th:if="${#fields.hasErrors('phone')}" class="error" th:errors="*{phone}"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="registerEmail">Email Address</label>
+                    <input type="email" class="form-input" id="registerEmail" name="email" th:field="*{email}" required>
+                    <div th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="registerUsername">Username</label>
+                    <input type="text" class="form-input" id="registerUsername" name="username" th:field="*{username}" required>
+                    <div th:if="${#fields.hasErrors('username')}" class="error" th:errors="*{username}"></div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="registerPassword">Password</label>
+                    <input type="password" class="form-input" id="registerPassword" name="password" th:field="*{password}" required>
+                    <div th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}"></div>
+                </div>
+                <button type="submit" class="form-submit">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 3DeDeck. All rights reserved. | Precision 3D Printing Solutions</p>
+    </footer>
+
+    <script>
+        function switchTab(type) {
+            const signinTab = document.getElementById('signinTab');
+            const registerTab = document.getElementById('registerTab');
+            const signinForm = document.getElementById('signinForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (type === 'signin') {
+                signinTab.classList.add('active');
+                registerTab.classList.remove('active');
+                signinForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            } else {
+                registerTab.classList.add('active');
+                signinTab.classList.remove('active');
+                registerForm.classList.remove('hidden');
+                signinForm.classList.add('hidden');
+            }
+        }
+
+        // Initialize with signin form visible
+        document.addEventListener('DOMContentLoaded', function() {
+            switchTab('signin');
+        });
+    </script>
+</body>
+</html>

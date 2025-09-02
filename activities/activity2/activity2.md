@@ -30,18 +30,32 @@
 
 ## Part 2 ScreenShots
 
-- This is a screenshot of the Maven Build configurations as well as showing the hellowrold.jar file
+- Login Form With no data validation
 
-![Maven Build](./Jarfile.png)
+![Login](./Login.png)
+
+-Login information displayed in terminal
+
+![Login info in terminal](./userandpw.png)
 
 
-- This is a screenshot of the Java ARchive (JAR) file Execution at local host8080
+- Form naviagates to orders correctly
 
-![JAR Execution](./80802.png)
+![Orders](./orders.png)
 
 - This is a screenshot of the Hello World  index.html page
 
-![Maven Console](./helloworldhtml.png)
+![Errors](./Errors.png)
+
+## Part 3  Screenshots
+
+- Screenshot of Login Page using layout
+
+![Login](./31.png)
+
+- Screenshot of Orders page with layout
+
+![orders](./32.png)
 
 ### All research questions have been answered within Halo
 
@@ -49,10 +63,11 @@
 
 This assignment was helpful in many ways and I learned the following skills:
 
-- How to work on my own markdown file
-- How to set up a dev enviornment within visual studio code using Spring Boot
-- How Spring Boot will help set up the program with me just needing to make small adjustments
-- How to use localhost:8080 to see the program execution
+- How to use html to create the login, errors and page layout for the web pages
+- linking another page within the local host
+- Using Spring Boot 
+- Using Thyme
+- making a functional and designed welcome page and order loading page
 
 Thank you
 
