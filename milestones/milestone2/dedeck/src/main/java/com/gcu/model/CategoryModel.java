@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 @Entity
 public class CategoryModel 
 {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private String categoryName;
 }
