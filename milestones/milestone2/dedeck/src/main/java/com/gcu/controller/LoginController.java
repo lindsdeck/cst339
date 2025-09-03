@@ -34,7 +34,7 @@ public class LoginController
         
         System.out.println(String.format("Login Submitted: %s, %s", loginModel.getUsername(), loginModel.getPassword()));
         
-        return "redirect:/success";
+        return "redirect:/products/";
     }
 
     @PostMapping("/doRegister")
@@ -48,7 +48,7 @@ public class LoginController
         }
         
         System.out.println(String.format("Registration attempt - Name: %s %s, Email: %s, Phone: %s, Username: %s", loginModel.getFirstName(), loginModel.getLastName(), loginModel.getEmail(),  loginModel.getPhone(), loginModel.getUsername()));
-        return "redirect:/Success";
+        return "login";
 
     }
 }

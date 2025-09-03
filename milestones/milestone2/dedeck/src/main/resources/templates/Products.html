@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Categories - 3DeDeck</title>
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;  background: #1a1a1a;  color: #e0e0e0;  min-height: 100vh;  display: flex;  flex-direction: column;
+        }
+
+        .navbar {
+            background: #000000;  padding: 1rem 2rem;  display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 2rem; color: #9d4edd; text-decoration: none;
+        }
+
+        .logo, .nav-link, .category-title {
+            font-weight: bold;  text-transform: uppercase;  letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;gap: 1rem;
+        }
+
+        .nav-link {
+            background: #333333;  color: #ffffff;  border: 1px solid #333333;  padding: 0.8rem 1.5rem;  text-decoration: none; transition: background-color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: #9d4edd;  border-color: #9d4edd;
+        }
+
+        .main-container {
+            flex: 1;  display: flex;  align-items: center;  justify-content: center;  padding: 3rem 2rem;
+        }
+
+        .categories-container {
+            width: 100%;  max-width: 1200px;
+        }
+
+        .page-title {
+            text-align: center;   font-size: 3rem;   color: #9d4edd;   margin-bottom: 1rem;  font-weight: bold; text-transform: uppercase;  letter-spacing: 2px;
+        }
+
+        .page-subtitle {
+            text-align: center;  font-size: 1.2rem;  color: #e0e0e0;  margin-bottom: 3rem; opacity: 0.8;
+        }
+
+        .categories-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; justify-items: center;
+        }
+
+        .category-card {
+            background: #333333;   border: 1px solid #333333;    padding: 3rem 2rem; width: 100%; max-width: 400px; text-align: center; cursor: pointer; transition: all 0.3s ease; text-decoration: none; color: inherit;
+        }
+
+        .category-card:hover {
+            background: #9d4edd;
+            border-color: #9d4edd;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(157, 78, 221, 0.3);
+        }
+
+        .category-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .category-description {
+            font-size: 1rem;
+            color: #e0e0e0;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .footer {
+            background: #000000; 
+            padding: 2rem; 
+            text-align: center; 
+            border-top: 1px solid #333; 
+            color: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .main-container {
+                padding: 2rem 1rem;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .category-card {
+                padding: 2.5rem 1.5rem;
+            }
+         
+            .category-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .category-card {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">3DeDeck</a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/products" class="nav-link">Products</a>
+            <a href="/logout" class="nav-link">Logout</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="categories-container">
+            <h1 class="page-title">Product Categories</h1>
+            <p class="page-subtitle">Select a category and explore our precision 3D prints</p>
+            
+            <div class="categories-grid">
+                <a href="/products/practical" class="category-card">
+                    <h2 class="category-title">Practical</h2>
+                    <p class="category-description">
+                        Functional items designed for everyday use to help solve problems around your home. organizers, tools, and useful gadgets that are both practical and stylish. 
+                    </p>
+                </a>
+
+                <a href="/products/fun" class="category-card">
+                    <h2 class="category-title">Fun</h2>
+                    <p class="category-description">
+                        Entertainment and recreational items that will be bring joy to your day.  Need a fidget to help you focus, unique game boards or flexi toys? We have you covered!
+                    </p>
+                </a>
+
+                <a href="/products/collectibles" class="category-card">
+                    <h2 class="category-title">Collectibles</h2>
+                    <p class="category-description">
+                        Premium figurines and collectible items.  From your favorite characters to car models, our collectible prints are perfect for display or gifting. 
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 3DeDeck. All rights reserved. | Precision 3D Printing Solutions</p>
+    </footer>
+</body>
+</html>
