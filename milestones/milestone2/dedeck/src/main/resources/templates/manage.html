@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Inventory - 3DeDeck</title>
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif; background: #1a1a1a; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column;
+        }
+
+        .navbar {
+            background: #000000; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 2rem; color: #9d4edd; text-decoration: none;
+        }
+
+        .logo, .nav-link, .option-card h3, .btn {
+            font-weight: bold; text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .nav-link {
+            background: #333333; color: #ffffff; border: 1px solid #333333; padding: 0.8rem 1.5rem; text-decoration: none;
+        }
+
+        .nav-link:hover {
+            background: #9d4edd; border-color: #9d4edd;
+        }
+
+        .manage-container {
+            flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem;
+        }
+
+        .manage-content {
+            background: #333333; padding: 3rem; width: 100%; max-width: 800px; border: 1px solid #333333;
+        }
+
+        .manage-title {
+            text-align: center; font-size: 2.5rem; color: #9d4edd; margin-bottom: 2rem;
+        }
+
+        .subtitle {
+            text-align: center; color: #e0e0e0; margin-bottom: 3rem; font-size: 1.1rem;
+        }
+
+        .options-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem;
+        }
+
+        .option-card {
+            background: #1a1a1a; border: 2px solid #333333; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease;
+        }
+
+        .option-card:hover {
+            border-color: #9d4edd; background: #2a2a2a;
+        }
+
+        .option-card.active {
+            border-color: #9d4edd; background: #2a2a2a;
+        }
+
+        .option-card h3 {
+            color: #ffffff; margin-bottom: 0.5rem; font-size: 1.2rem;
+        }
+
+        .option-card p {
+            color: #cccccc; font-size: 0.9rem;
+        }
+
+        .action-section {
+            margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #333333;
+        }
+
+        .btn {
+            background: #9d4edd; color: #ffffff; border: 1px solid #9d4edd; padding: 1rem 2rem; font-size: 1rem; cursor: pointer; margin-right: 1rem; text-decoration: none; display: inline-block;
+        }
+
+        .btn:hover {
+            background: #8b3cc7; border-color: #8b3cc7;
+        }
+
+        .btn-secondary {
+            background: #333333; border-color: #333333;
+        }
+
+        .btn-secondary:hover {
+            background: #555555; border-color: #555555;
+        }
+
+        .footer {
+            background: #000000; padding: 2rem; text-align: center; border-top: 1px solid #333; color: #e0e0e0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .manage-content {
+                padding: 2rem; margin: 1rem;
+            }
+            
+            .manage-title {
+                font-size: 2rem;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">3DeDeck</a>
+        <div>
+            <a href="/" class="nav-link">Home</a>
+            <a href="/orders" class="nav-link">Orders</a>
+            <a href="/logout" class="nav-link">Logout</a>
+        </div>
+    </nav>
+
+    <div class="manage-container">
+        <div class="manage-content">
+            <h1 class="manage-title">Inventory Management</h1>
+            <p class="subtitle">Select an action to manage your 3D printing inventory</p>
+            
+            <div class="options-grid">
+                <div class="option-card" onclick="selectOption('add')" id="addOption">
+                    <div class="option-icon">+</div>
+                    <h3>Add Inventory</h3>
+                    <p>Add new items to your inventory</p>
+                </div>
+                
+                <div class="option-card" onclick="selectOption('edit')" id="editOption">
+                    <div class="option-icon">✏</div>
+                    <h3>Edit Inventory</h3>
+                    <p>Modify existing inventory items</p>
+                </div>
+                
+                <div class="option-card" onclick="selectOption('delete')" id="deleteOption">
+                    <div class="option-icon">×</div>
+                    <h3>Delete Inventory</h3>
+                    <p>Remove items from your inventory</p>
+                </div>
+            </div>
+
+            <div class="action-section">
+                <div id="actionButtons" class="hidden">
+                    <p style="margin-bottom: 1rem; color: #e0e0e0;">
+                        <span id="actionDescription">Please select an option above to continue.</span>
+                    </p>
+                    <a href="#" class="btn" id="proceedBtn">Proceed</a>
+                    <button onclick="resetSelection()" class="btn btn-secondary">Reset Selection</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 3DeDeck. All rights reserved. | Precision 3D Printing Solutions</p>
+    </footer>
+
+    <script>
+        function selectOption(action) {
+            console.log('selectOption called with action:', action);
+            
+            // Immediately navigate to the selected page
+            switch(action) {
+                case 'add':
+                    window.location.href = '/products/add';
+                    break;
+                case 'edit':
+                    window.location.href = '/products/edit';
+                    break;
+                case 'delete':
+                    window.location.href = '/products/delete';
+                    break;
+                default:
+                    console.log('Unknown action:', action);
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Manage page loaded successfully');
+        });
+    </script>
+</body>
+</html>

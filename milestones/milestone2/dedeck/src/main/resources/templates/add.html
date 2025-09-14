@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Inventory - 3DeDeck</title>
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif; background: #1a1a1a; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column;
+        }
+
+        .navbar {
+            background: #000000; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 2rem; color: #9d4edd; text-decoration: none;
+        }
+
+        .logo, .auth-tab, .form-label, .form-submit, .nav-link {
+            font-weight: bold; text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .nav-link, .login-box {
+            background: #333333; color: #ffffff; border: 1px solid #333333; padding: 0.8rem 1.5rem; text-decoration: none;
+        }
+
+        .add-container {
+            flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem;
+        }
+
+        .add-box {
+            background: #333333; padding: 3rem; width: 100%; max-width: 450px; border: 1px solid #333333;
+        }
+
+        .add-title {
+            text-align: center; font-size: 2.5rem; color: #9d4edd; margin-bottom: 2rem;
+        }
+
+        .form-input, textarea.form-input {
+            width: 100%; background: #1a1a1a; border: 1px solid #333333; color: #ffffff; padding: 0.8rem; font-size: 1rem;
+        }
+
+        .form-submit {
+            width: 100%; padding: 1rem; font-size: 1.1rem; cursor: pointer; margin-top: 1rem; background: #9d4edd; color: #ffffff; border: 1px solid #9d4edd;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block; margin-bottom: 0.5rem; color: #e0e0e0; font-size: 0.9rem;
+        }
+
+        .footer {
+            background: #000000; padding: 2rem; text-align: center; border-top: 1px solid #333; color: #e0e0e0;
+        }
+
+        .error {
+            color: #e74c3c; font-size: 0.9rem; margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .add-box {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .add-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">3DeDeck</a>
+        <div>
+            <a href="/" class="nav-link">Home</a>
+            <a href="/orders" class="nav-link">Orders</a>
+            <a href="/logout" class="nav-link">Logout</a>
+        </div>
+    </nav>
+
+    <div class="add-container">
+        <div class="add-box">
+            <h1 class="add-title">Add Inventory</h1>
+            
+            <form class="auth-form" id="addInventoryForm" th:action="@{/products/add}" method="post" th:object="${categoryModel}">
+                <div class="form-group">
+                    <label class="form-label" for="category">Category</label>
+                    <select class="form-input" id="category" name="category" th:field="*{category}" required onchange="toggleCategoryFields()">
+                        <option value="">Select a category</option>
+                        <option value="fun">Fun</option>
+                        <option value="practical">Practical</option>
+                        <option value="collectible">Collectible</option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('category')}" class="error" th:errors="*{category}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="productName">Name</label>
+                    <input type="text" class="form-input" id="productName" name="name" th:field="*{name}" required>
+                    <div th:if="${#fields.hasErrors('name')}" class="error" th:errors="*{name}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-input" id="description" name="description" th:field="*{description}" rows="3" required></textarea>
+                    <div th:if="${#fields.hasErrors('description')}" class="error" th:errors="*{description}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="price">Price</label>
+                    <input type="number" class="form-input" id="price" name="price" th:field="*{price}" step="0.01" min="0" required>
+                    <div th:if="${#fields.hasErrors('price')}" class="error" th:errors="*{price}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="quantity">Quantity</label>
+                    <input type="number" class="form-input" id="quantity" name="quantity" th:field="*{quantity}" min="0" required>
+                    <div th:if="${#fields.hasErrors('quantity')}" class="error" th:errors="*{quantity}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="productNumber">Product Number</label>
+                    <input type="text" class="form-input" id="productNumber" name="productNumber" th:field="*{productNumber}" required>
+                    <div th:if="${#fields.hasErrors('productNumber')}" class="error" th:errors="*{productNumber}"></div>
+                </div>
+
+                <!-- Practical Category Specific Field -->
+                <div class="form-group category-field practical-field" style="display: none;">
+                    <label class="form-label" for="useArea">Use Area</label>
+                    <input type="text" class="form-input" id="useArea" name="useArea" th:field="*{useArea}">
+                    <div th:if="${#fields.hasErrors('useArea')}" class="error" th:errors="*{useArea}"></div>
+                </div>
+
+                <!-- Collectible Category Specific Field -->
+                <div class="form-group category-field collectible-field" style="display: none;">
+                    <label class="form-label" for="collection">Collection</label>
+                    <input type="text" class="form-input" id="collection" name="collection" th:field="*{collection}">
+                    <div th:if="${#fields.hasErrors('collection')}" class="error" th:errors="*{collection}"></div>
+                </div>
+
+                <button type="submit" class="form-submit">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 3DeDeck. All rights reserved. | Precision 3D Printing Solutions</p>
+    </footer>
+
+    <script>
+    function toggleCategoryFields() {
+        const category = document.getElementById('category').value;
+        const practicalField = document.querySelector('.practical-field');
+        const collectibleField = document.querySelector('.collectible-field');
+        
+        // Hide all category-specific fields
+        practicalField.style.display = 'none';
+        collectibleField.style.display = 'none';
+        
+        // Clear values when hiding fields
+        document.getElementById('useArea').value = '';
+        document.getElementById('collection').value = '';
+        
+        // Show relevant field based on category
+        if (category === 'practical') {
+            practicalField.style.display = 'block';
+        } else if (category === 'collectible') {
+            collectibleField.style.display = 'block';
+        }
+    }
+    </script>
+</body>
+</html>
