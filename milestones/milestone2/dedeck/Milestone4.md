@@ -8,7 +8,7 @@
 An asthetically pleasing online storefront for 3D printed items within 3 categories - Fun, Practical and collectibles.  3DeDeck's website will be full functional with login capabilities, inventory changing capabilities, a chopping cart and order history. 
 
 ## Video Cast Link
-
+https://youtu.be/ARxnn90U2PU
 
 ## Milestone Code Link
 https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
