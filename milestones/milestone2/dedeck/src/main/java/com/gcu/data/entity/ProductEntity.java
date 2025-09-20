@@ -1,64 +1,69 @@
-package com.gcu.model;
+package com.gcu.data.entity;
 
-import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.DecimalMin;
+import jakarta.persistence.Column;
+import java.math.BigDecimal;
 
 @Entity
-public class CategoryModel 
+@Table(name = "products")   
+public class ProductEntity 
 {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message="Category is required")
-    private String category;
-
-    @NotNull(message="Name is required")
+    @Column(name= "name", nullable = false, length = 255)
     private String name;
 
-    @NotNull(message="Description is required")
+    @Column(name= "description", columnDefinition = "TEXT")
     private String description;
 
-    @NotNull(message="Price is required")
-    @DecimalMin(value="0.0", inclusive=false, message="Price must be greater than zero")
-    private Double price;
+    @Column(name= "price", nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 
-    @NotNull(message="Quantity is required")
-    @Min(value=0, message="Quantity must be zero or greater")
+    @Column(name= "quantity")
     private Integer quantity;
 
-    @NotNull(message="Product number is required")
+    @Column(name = "category", length = 50)
+    private String category;
+
+    @Column(name = "product_number", length = 50, unique = true)
     private String productNumber;
 
+    @Column(name = "use_area", length = 255)
     private String useArea;
+
+    @Column(name = "collection", length = 255)
     private String collection;
 
-    public CategoryModel() {
+    public ProductEntity()
+    {
+
     }
 
+    public ProductEntity(String name, String description, BigDecimal price, Integer quantity, String productNumber, String category) 
+    {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
+        this.productNumber = productNumber;
+    }
     public Long getId() {
         return id;
-    }   
+    }
     public void setId(Long id) {
         this.id = id;
-    }   
-
-    public String getCategory() {
-        return category;
-    }   
-    public void setCategory(String category) {
-        this.category = category;
-    }   
+    }
     public String getName() {
         return name;
-    }   
-    
+    }
     public void setName(String name) {
         this.name = name;
     }
@@ -68,10 +73,10 @@ public class CategoryModel
     public void setDescription(String description) {
         this.description = description;
     }
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
     public Integer getQuantity() {
@@ -79,6 +84,12 @@ public class CategoryModel
     }
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+    public String getCategory() {
+        return category;
+    }
+    public void setCategory(String category) {
+        this.category = category;
     }
     public String getProductNumber() {
         return productNumber;
@@ -98,6 +109,6 @@ public class CategoryModel
     public void setCollection(String collection) {
         this.collection = collection;
     }
-    
+
 
 }
