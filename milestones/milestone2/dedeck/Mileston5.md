@@ -8,7 +8,7 @@
 An asthetically pleasing online storefront for 3D printed items within 3 categories - Fun, Practical and collectibles.  3DeDeck's website will be full functional with login capabilities, inventory changing capabilities, a chopping cart and order history. 
 
 ## Video Cast Links
-
+https://youtu.be/WDT6AbD_X1E
 
 ## Milestone Code Link
 https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
@@ -38,11 +38,19 @@ https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
     - Uses same repository and DAO patterns as registration module
     - Upon logging in, the user is brought to the main product page of the store front. 
 
+- Product Display
+    -Category-based product filtering
+    - Individual category pages with dynamic URL routing
+    - All Products view with category grouping
+    - Product search functionality
+    - Real time updates of products are displayed
+
 - Manage Product Page
     - Admin users can manage products by:
         - adding a new product that is saved in MySQL
         - deleteing products
         - adjusting aspects of the product - price, quanitty, description.
+        - All adjustments are adjusted instantly and reflected within the database and the display of products
 
 ## Technical Approach
 - Spring security for login authorization.
@@ -55,6 +63,7 @@ https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
 - Repository design pattern for data access abstraction
 - DAO pattern through data service class
 - JPA entity annotations for database table mapping
+- Full database integration with complete editing capabilities within the applicaiton
 
 ## Arcitecture Overview
 3DeDeck's application follows MVC architecture pattern using the Spring Boot framework along with Thymeleaf.  
@@ -68,6 +77,27 @@ https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
 - HTML, CSS and JavaScript
 - Maven
 - Java
+
+## Database Schema
+- Product Table
+    - id (Primary Key)
+    - name
+    - Description
+    - Price
+    - Quantity
+    - Category
+    - Product number
+    - Use Area (Only for Practical category items)
+    - Collection (Only for Collectibles category)
+
+- Users Table
+    - id (Primary Key)
+    - username
+    - password
+    - First and last name
+    - email
+    - Phone
+
 
 ## Known Issues
 - Product searching and filtering functionality needs implemented
@@ -124,14 +154,33 @@ F --> A
 G --> C
 
 D --> H[Manage Products]
-H --> I[Product Management Page]
-I --> J[Add Inventory]
-I --> K[Edit Inventory]
-I --> L[Delete Inventory]
+H --> I[Fun Products] & J[Practical Products] & K[Collectibles]
+H --> L[All Product View]
+H --> M[Manage Products - Admin]
 
-J --> M[Add Inventory Form]
-M --> |Save to Database| N[Product Created Successfully]
+M --> N[Product Management Dashboard]
+N --> O[Add New Product]
+N --> P[Edit Existing Product]
+N --> q[Delete Product]
 
+O --> R[Add Product form]
+R --> |Success| s[Product Created - Return to Dashboard]
+R --> |Validation Error| T[Form Error - Retry]
+T --> r
+
+P -->R[Add Product Form]
+U --> |Success| S[Product Created - Return to Dashboard]
+U --> |Validation Error| W[Form Error Retry]
+W --> U
+
+Q --> X[Delete Confirmation Page]
+X --> |Confirm| Y[Product Deleted - Return to Dashboard]
+X --> |Calcel| N
+
+I --> Z[Product List - Fun Category]
+J --> AA[Product List - Practical Category]
+K --> BB[Product List - Collectible Category]
+L --> CC[All Products Grouped By Category]
 
 ```
 

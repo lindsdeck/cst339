@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">3DeDeck - Products</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: #000000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(138, 43, 226, 0.3);
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #9d4edd;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #e0e0e0;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-link:hover {
+            color: #9d4edd;
+            border-color: #9d4edd;
+        }
+
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: #9d4edd;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .search-bar {
+            max-width: 400px;
+            margin: 0 auto 2rem auto;
+            display: flex;
+        }
+
+        .search-input {
+            flex: 1;
+            background: #333333;
+            border: 1px solid #555555;
+            color: #e0e0e0;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #9d4edd;
+        }
+
+        .search-btn {
+            background: #7c3aed;
+            border: 1px solid #9d4edd;
+            color: #ffffff;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #9d4edd;
+        }
+
+        .category-section {
+            margin-bottom: 3rem;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #9d4edd;
+            padding-bottom: 1rem;
+        }
+
+        .category-name {
+            font-size: 2.5rem;
+            color: #9d4edd;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            min-width: 300px;
+        }
+
+        .category-count {
+            color: #888;
+            font-size: 1.2rem;
+            margin-left: 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-left: 320px;
+        }
+
+        .product-box {
+            background: #2d2d2d;
+            border: 2px solid #444;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-box:hover {
+            border-color: #9d4edd;
+            box-shadow: 0 4px 20px rgba(157, 78, 221, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            color: #9d4edd;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .product-description {
+            color: #c0c0c0;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            line-height: 1.5;
+            min-height: 60px;
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem 0;
+            border-top: 1px solid #555;
+            border-bottom: 1px solid #555;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            color: #9d4edd;
+            font-weight: bold;
+        }
+
+        .product-stock {
+            color: #c0c0c0;
+            font-size: 1rem;
+        }
+
+        .add-to-cart-btn {
+            background: #333333;
+            color: #ffffff;
+            border: 2px solid #555555;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #7c3aed;
+            border-color: #9d4edd;
+            color: #ffffff;
+        }
+
+        .add-to-cart-btn:disabled {
+            background: #1a1a1a;
+            border-color: #333;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+            grid-column: 1 / -1;
+        }
+
+        .no-products h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #c0c0c0;
+        }
+
+        .single-category .products-grid {
+            margin-left: 0;
+        }
+
+        .single-category .category-header {
+            justify-content: center;
+            text-align: center;
+        }
+
+        .single-category .category-name {
+            min-width: auto;
+        }
+
+        @media (max-width: 1024px) {
+            .products-grid {
+                margin-left: 0;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .category-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .category-name {
+                min-width: auto;
+                margin-bottom: 0.5rem;
+            }
+            
+            .category-count {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 1rem;
+            }
+            
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .category-name {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">3DeDeck</a>
+        <div class="nav-menu">
+            <a href="/products/" class="nav-link">All Products</a>
+            <a href="/products/category/Fun" class="nav-link">Fun</a>
+            <a href="/products/category/Practical" class="nav-link">Practical</a>
+            <a href="/products/category/Collectibles" class="nav-link">Collectibles</a>
+            <a href="/products/manage" class="nav-link">Manage</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="page-header">
+            <h1 class="page-title" th:text="${category != null ? category + ' Products' : 'All Products'}">All Products</h1>
+            
+            <!-- Search Bar-->
+            <form class="search-bar" method="get" th:action="@{/products/search}" th:if="${category == null}">
+                <input type="text" class="search-input" name="query" 
+                       placeholder="Search products..." 
+                       th:value="${searchQuery}">
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+        </div>
+
+        <!-- Displaying only 1 category -->
+        <div th:if="${category == null and products != null and !products.empty}">
+
+            <!-- Fun -->
+            <div class="category-section" th:with="funProducts=${products.stream().filter(p -> p.category == 'Fun').toList()}">
+                <div class="category-header" th:if="${!funProducts.empty}">
+                    <h2 class="category-name">Fun</h2>
+                    <span class="category-count" th:text="${funProducts.size()} + ' items'">0 items</span>
+                </div>
+                <div class="products-grid" th:if="${!funProducts.empty}">
+                    <div class="product-box" th:each="product : ${funProducts}">
+                        <div class="product-name" th:text="${product.name}">Product Name</div>
+                        <div class="product-description" th:text="${product.description}">Product description...</div>
+                        <div class="product-details">
+                            <div class="product-price" th:text="'$' + ${product.price}">$0.00</div>
+                            <div class="product-stock" th:text="'In Stock: ' + ${product.quantity}">In Stock: 0</div>
+                        </div>
+                        <button class="add-to-cart-btn" 
+                                th:disabled="${product.quantity == 0}"
+                                th:text="${product.quantity > 0 ? 'ADD TO CART' : 'OUT OF STOCK'}">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practical-->
+            <div class="category-section" th:with="practicalProducts=${products.stream().filter(p -> p.category == 'Practical').toList()}">
+                <div class="category-header" th:if="${!practicalProducts.empty}">
+                    <h2 class="category-name">Practical</h2>
+                    <span class="category-count" th:text="${practicalProducts.size()} + ' items'">0 items</span>
+                </div>
+                <div class="products-grid" th:if="${!practicalProducts.empty}">
+                    <div class="product-box" th:each="product : ${practicalProducts}">
+                        <div class="product-name" th:text="${product.name}">Product Name</div>
+                        <div class="product-description" th:text="${product.description}">Product description...</div>
+                        <div class="product-details">
+                            <div class="product-price" th:text="'$' + ${product.price}">$0.00</div>
+                            <div class="product-stock" th:text="'In Stock: ' + ${product.quantity}">In Stock: 0</div>
+                        </div>
+                        <button class="add-to-cart-btn" 
+                                th:disabled="${product.quantity == 0}"
+                                th:text="${product.quantity > 0 ? 'ADD TO CART' : 'OUT OF STOCK'}">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collectibles -->
+            <div class="category-section" th:with="collectibleProducts=${products.stream().filter(p -> p.category == 'Collectibles').toList()}">
+                <div class="category-header" th:if="${!collectibleProducts.empty}">
+                    <h2 class="category-name">Collectibles</h2>
+                    <span class="category-count" th:text="${collectibleProducts.size()} + ' items'">0 items</span>
+                </div>
+                <div class="products-grid" th:if="${!collectibleProducts.empty}">
+                    <div class="product-box" th:each="product : ${collectibleProducts}">
+                        <div class="product-name" th:text="${product.name}">Product Name</div>
+                        <div class="product-description" th:text="${product.description}">Product description...</div>
+                        <div class="product-details">
+                            <div class="product-price" th:text="'$' + ${product.price}">$0.00</div>
+                            <div class="product-stock" th:text="'In Stock: ' + ${product.quantity}">In Stock: 0</div>
+                        </div>
+                        <button class="add-to-cart-btn" 
+                                th:disabled="${product.quantity == 0}"
+                                th:text="${product.quantity > 0 ? 'ADD TO CART' : 'OUT OF STOCK'}">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1 category view -->
+        <div class="single-category" th:if="${category != null and products != null and !products.empty}">
+            <div class="category-section">
+                <div class="category-header">
+                    <h2 class="category-name" th:text="${category}">Category</h2>
+                    <span class="category-count" th:text="${products.size()} + ' items'">0 items</span>
+                </div>
+                <div class="products-grid">
+                    <div class="product-box" th:each="product : ${products}">
+                        <div class="product-name" th:text="${product.name}">Product Name</div>
+                        <div class="product-description" th:text="${product.description}">Product description...</div>
+                        <div class="product-details">
+                            <div class="product-price" th:text="'$' + ${product.price}">$0.00</div>
+                            <div class="product-stock" th:text="'In Stock: ' + ${product.quantity}">In Stock: 0</div>
+                        </div>
+                        <button class="add-to-cart-btn" 
+                                th:disabled="${product.quantity == 0}"
+                                th:text="${product.quantity > 0 ? 'ADD TO CART' : 'OUT OF STOCK'}">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

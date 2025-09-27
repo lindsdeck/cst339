@@ -95,7 +95,7 @@
         <div class="add-box">
             <h1 class="add-title">Add Inventory</h1>
             
-            <form class="auth-form" id="addInventoryForm" th:action="@{/products/add}" method="post" th:object="${categoryModel}">
+            <form class="auth-form" id="addInventoryForm" th:action="${isEdit} ? @{/products/edit/{id}(id=${categoryModel.id})} : @{/products/add}" method="post" th:object="${categoryModel}">
                 <div class="form-group">
                     <label class="form-label" for="category">Category</label>
                     <select class="form-input" id="category" name="category" th:field="*{category}" required onchange="toggleCategoryFields()">
@@ -137,21 +137,21 @@
                     <div th:if="${#fields.hasErrors('productNumber')}" class="error" th:errors="*{productNumber}"></div>
                 </div>
 
-                <!-- Practical Category Specific Field -->
+
                 <div class="form-group category-field practical-field" style="display: none;">
                     <label class="form-label" for="useArea">Use Area</label>
                     <input type="text" class="form-input" id="useArea" name="useArea" th:field="*{useArea}">
                     <div th:if="${#fields.hasErrors('useArea')}" class="error" th:errors="*{useArea}"></div>
                 </div>
 
-                <!-- Collectible Category Specific Field -->
+
                 <div class="form-group category-field collectible-field" style="display: none;">
                     <label class="form-label" for="collection">Collection</label>
                     <input type="text" class="form-input" id="collection" name="collection" th:field="*{collection}">
                     <div th:if="${#fields.hasErrors('collection')}" class="error" th:errors="*{collection}"></div>
                 </div>
 
-                <button type="submit" class="form-submit">Add Product</button>
+                <button type="submit" class="form-submit" th:text="${isEdit} ? 'Update Product' : 'Add Product'">Add Product </button>
             </form>
         </div>
     </div>

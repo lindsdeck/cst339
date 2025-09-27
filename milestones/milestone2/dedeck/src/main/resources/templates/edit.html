@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Products - 3DeDeck</title>
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif; 
+            background: #1a1a1a; 
+            color: #e0e0e0; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: #000000; 
+            padding: 1rem 2rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 2rem; 
+            color: #9d4edd; 
+            text-decoration: none;
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+        }
+
+        .nav-link {
+            background: #333333; 
+            color: #ffffff; 
+            border: 1px solid #333333; 
+            padding: 0.8rem 1.5rem; 
+            text-decoration: none;
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            margin-left: 1rem;
+        }
+
+        .nav-link:hover {
+            background: #9d4edd; 
+            border-color: #9d4edd;
+        }
+
+        .main-container {
+            flex: 1; 
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: #9d4edd;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .page-subtitle {
+            color: #c0c0c0;
+            font-size: 1.2rem;
+        }
+
+        .products-table {
+            background: #333333;
+            border: 1px solid #555;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .products-table th,
+        .products-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #555;
+        }
+
+        .products-table th {
+            background: #2d2d2d;
+            color: #9d4edd;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .products-table td {
+            color: #e0e0e0;
+        }
+
+        .btn {
+            background: #333333;
+            color: #ffffff;
+            border: 2px solid #555555;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: #7c3aed;
+            border-color: #9d4edd;
+            color: #ffffff;
+        }
+
+        .btn-danger {
+            background: #cc3333;
+            border-color: #cc3333;
+        }
+
+        .btn-danger:hover {
+            background: #aa2222;
+            border-color: #aa2222;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+        }
+
+        .no-products h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #c0c0c0;
+        }
+
+        .back-btn {
+            background: #9d4edd;
+            border-color: #9d4edd;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+
+        .back-btn:hover {
+            background: #8b3cc7;
+            border-color: #8b3cc7;
+        }
+
+        .footer {
+            background: #000000; 
+            padding: 2rem; 
+            text-align: center; 
+            border-top: 1px solid #333; 
+            color: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .products-table {
+                font-size: 0.9rem;
+            }
+            
+            .products-table th,
+            .products-table td {
+                padding: 0.5rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">3DeDeck</a>
+        <div>
+            <a href="/" class="nav-link">Home</a>
+            <a href="/products/" class="nav-link">Products</a>
+            <a href="/products/manage" class="nav-link">Manage</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">Edit Products</h1>
+            <p class="page-subtitle">Select a product to edit</p>
+        </div>
+
+        <div th:if="${products != null and !products.empty}">
+            <table class="products-table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Product Number</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.name}">Product Name</td>
+                        <td th:text="${product.category}">Category</td>
+                        <td th:text="'$' + ${product.price}">$0.00</td>
+                        <td th:text="${product.quantity}">0</td>
+                        <td th:text="${product.productNumber}">000000</td>
+                        <td>
+                            <a th:href="@{'/products/edit/' + ${product.id}}" class="btn">Edit</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="no-products" th:if="${products == null or products.empty}">
+            <h3>No Products Found</h3>
+            <p>There are no products available to edit.</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/products/manage" class="btn back-btn">Back to Management</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 3DeDeck. All rights reserved. | Precision 3D Printing Solutions</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Product - 3DeDeck</title>
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif; 
+            background: #1a1a1a; 
+            color: #e0e0e0; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: #000000; 
+            padding: 1rem 2rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 2rem; 
+            color: #9d4edd; 
+            text-decoration: none;
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+        }
+
+        .nav-link {
+            background: #333333; 
+            color: #ffffff; 
+            border: 1px solid #333333; 
+            padding: 0.8rem 1.5rem; 
+            text-decoration: none;
+            font-weight: bold; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            margin-left: 1rem;
+        }
+
+        .nav-link:hover {
+            background: #9d4edd; 
+            border-color: #9d4edd;
+        }
+
+        .main-container {
+            flex: 1; 
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: #9d4edd;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .page-subtitle {
+            color: #c0c0c0;
+            font-size: 1.2rem;
+        }
+
+        /* Delete confirmation for specific product */
+        .delete-confirmation {
+            background: #333333;
+            border: 1px solid #555;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .product-details {
+            background: #2d2d2d;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #555;
+        }
+
+        .product-details h3 {
+            color: #9d4edd;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #444;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #c0c0c0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .detail-value {
+            color: #e0e0e0;
+        }
+
+        .price-value {
+            color: #9d4edd;
+            font-weight: bold;
+        }
+
+        /* Products list for general delete page */
+        .products-table {
+            background: #333333;
+            border: 1px solid #555;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .products-table th,
+        .products-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #555;
+        }
+
+        .products-table th {
+            background: #2d2d2d;
+            color: #9d4edd;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .products-table td {
+            color: #e0e0e0;
+        }
+
+        .btn {
+            background: #333333;
+            color: #ffffff;
+            border: 2px solid #555555;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #7c3aed;
+            border-color: #9d4edd;
+            color: #ffffff;
+        }
+
+        .btn-danger {
+            background: #cc3333;
+            border-color: #cc3333;
+        }
+
+        .btn-danger:hover {
+            background: #aa2222;
+            border-color: #aa2222;
+        }
+
+        .btn-cancel {
+            background: #666666;
+            border-color: #666666;
+        }
+
+        .btn-cancel:hover {
+            background: #555555;
+            border-color: #555555;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+        }
+
+        .no-products h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #c0c0c0;
+        }
+
+        .footer {
+            background: #000000; 
+            padding: 2rem; 
+            text-align: center; 
+            border-top: 1px solid #333; 
+            color: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .detail-row {
+                flex-direction: column;
+            }
+            
+            .products-table {
+                font-size: 0.9rem;
+            }
+            
+            .products-table th,
+            .products-table td {
+                padding: 0.5rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">3DeDeck</a>
+        <div>
+            <a href="/" class="nav-link">Home</a>
+            <a href="/products/" class="nav-link">Products</a>
+            <a href="/products/manage" class="nav-link">Manage</a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">Delete Product</h1>
+        </div>
+
+        <div th:if="${product != null}" class="delete-confirmation">
+            <h2 style="color: #9d4edd; margin-bottom: 1rem;">CONFIRM DELETION</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                Are you sure you want to permanently delete this product? This action cannot be undone.
+            </p>
+
+            <div class="product-details">
+                <h3>Product to be Deleted:</h3>
+                <div class="detail-row">
+                    <span class="detail-label">Product Name:</span>
+                    <span class="detail-value" th:text="${product.name}">Product Name</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Category:</span>
+                    <span class="detail-value" th:text="${product.category}">Category</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Price:</span>
+                    <span class="detail-value price-value" th:text="'$' + ${product.price}">$0.00</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Quantity:</span>
+                    <span class="detail-value" th:text="${product.quantity}">0</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Product Number:</span>
+                    <span class="detail-value" th:text="${product.productNumber}">000000</span>
+                </div>
+                <div class="detail-row" th:if="${product.description}">
+                    <span class="detail-label">Description:</span>
+                    <span class="detail-value" th:text="${product.description}">Description</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <form th:action="@{'/products/delete/' + ${product.id}}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">YES, DELETE PRODUCT</button>
+                </form>
+                <a href="/products/manage" class="btn btn-cancel">CANCEL</a>
+            </div>
+        </div>
+
+        <div th:if="${product == null}">
+            <p class="page-subtitle" style="text-align: center;">Select a product to delete</p>
+
+            <div th:if="${products != null and !products.empty}">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Product Number</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product : ${products}">
+                            <td th:text="${product.name}">Product Name</td>
+                            <td th:text="${product.category}">Category</td>
+                            <td th:text="'$' + ${product.price}">$0.00</td>
+                            <td th:text="${product.quantity}">0</td>
+                            <td th:text="${product.productNumber}">000000</td>
+                            <td>
+                                <a th:href="@{'/products/delete/' + ${product.id}}" 
+                                   class="btn btn-danger btn-small">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="no-products" th:if="${products == null or products.empty}">
+                <h3>No Products Found</h3>
+                <p>There are no products available to delete.</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/products/manage" class="btn">Back to Management</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 3DeDeck. All rights reserved. | Precision 3D Printing Solutions</p>
+    </footer>
+</body>
+</html>

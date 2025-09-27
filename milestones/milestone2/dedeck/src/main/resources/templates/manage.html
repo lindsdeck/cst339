@@ -21,7 +21,7 @@
             font-size: 2rem; color: #9d4edd; text-decoration: none;
         }
 
-        .logo, .nav-link, .option-card h3, .btn {
+        .logo, .nav-link, .btn {
             font-weight: bold; text-transform: uppercase; letter-spacing: 2px;
         }
 
@@ -34,47 +34,23 @@
         }
 
         .manage-container {
-            flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem;
+            flex: 1; padding: 2rem; max-width: 1200px; margin: 0 auto;
         }
 
-        .manage-content {
-            background: #333333; padding: 3rem; width: 100%; max-width: 800px; border: 1px solid #333333;
+        .manage-header {
+            text-align: center; margin-bottom: 2rem;
         }
 
         .manage-title {
-            text-align: center; font-size: 2.5rem; color: #9d4edd; margin-bottom: 2rem;
+            font-size: 2.5rem; color: #9d4edd; margin-bottom: 1rem;
         }
 
         .subtitle {
-            text-align: center; color: #e0e0e0; margin-bottom: 3rem; font-size: 1.1rem;
+            color: #e0e0e0; margin-bottom: 2rem; font-size: 1.1rem;
         }
 
-        .options-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem;
-        }
-
-        .option-card {
-            background: #1a1a1a; border: 2px solid #333333; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease;
-        }
-
-        .option-card:hover {
-            border-color: #9d4edd; background: #2a2a2a;
-        }
-
-        .option-card.active {
-            border-color: #9d4edd; background: #2a2a2a;
-        }
-
-        .option-card h3 {
-            color: #ffffff; margin-bottom: 0.5rem; font-size: 1.2rem;
-        }
-
-        .option-card p {
-            color: #cccccc; font-size: 0.9rem;
-        }
-
-        .action-section {
-            margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #333333;
+        .add-product-section {
+            text-align: center; margin-bottom: 3rem;
         }
 
         .btn {
@@ -85,20 +61,68 @@
             background: #8b3cc7; border-color: #8b3cc7;
         }
 
-        .btn-secondary {
-            background: #333333; border-color: #333333;
+        .products-section {
+            background: #333333; border: 1px solid #333333; padding: 2rem;
         }
 
-        .btn-secondary:hover {
-            background: #555555; border-color: #555555;
+        .section-title {
+            font-size: 1.5rem; color: #9d4edd; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;
+        }
+
+        .product-card {
+            background: #2d2d2d; border: 2px solid #444; padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem; color: #9d4edd; margin-bottom: 0.5rem; font-weight: bold;
+        }
+
+        .product-category {
+            color: #888; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 1rem;
+        }
+
+        .product-info {
+            margin-bottom: 1rem;
+        }
+
+        .product-info p {
+            margin-bottom: 0.3rem; color: #c0c0c0;
+        }
+
+        .product-actions {
+            display: flex; gap: 0.5rem; margin-top: 1rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; border: 1px solid;
+        }
+
+        .btn-edit {
+            background: #4a90e2; color: white; border-color: #4a90e2;
+        }
+
+        .btn-edit:hover {
+            background: #357abd; border-color: #357abd;
+        }
+
+        .btn-delete {
+            background: #e74c3c; color: white; border-color: #e74c3c;
+        }
+
+        .btn-delete:hover {
+            background: #c0392b; border-color: #c0392b;
+        }
+
+        .no-products {
+            text-align: center; padding: 3rem; color: #888;
         }
 
         .footer {
             background: #000000; padding: 2rem; text-align: center; border-top: 1px solid #333; color: #e0e0e0;
-        }
-
-        .hidden {
-            display: none;
         }
 
         @media (max-width: 768px) {
@@ -106,20 +130,20 @@
                 padding: 1rem;
             }
             
-            .manage-content {
-                padding: 2rem; margin: 1rem;
+            .manage-container {
+                padding: 1rem;
             }
             
             .manage-title {
                 font-size: 2rem;
             }
 
-            .options-grid {
+            .products-grid {
                 grid-template-columns: 1fr;
             }
 
-            .btn {
-                margin-bottom: 1rem;
+            .product-actions {
+                flex-direction: column;
             }
         }
     </style>
@@ -129,44 +153,52 @@
         <a href="/" class="logo">3DeDeck</a>
         <div>
             <a href="/" class="nav-link">Home</a>
-            <a href="/orders" class="nav-link">Orders</a>
+            <a href="/products/" class="nav-link">Products</a>
             <a href="/logout" class="nav-link">Logout</a>
         </div>
     </nav>
 
     <div class="manage-container">
-        <div class="manage-content">
+        <div class="manage-header">
             <h1 class="manage-title">Inventory Management</h1>
-            <p class="subtitle">Select an action to manage your 3D printing inventory</p>
+            <p class="subtitle">Manage your 3D printing inventory</p>
+        </div>
+
+        <div class="add-product-section">
+            <a href="/products/add" class="btn">Add New Product</a>
+        </div>
+
+        <div class="products-section">
+            <h2 class="section-title">Current Inventory</h2>
             
-            <div class="options-grid">
-                <div class="option-card" onclick="selectOption('add')" id="addOption">
-                    <div class="option-icon">+</div>
-                    <h3>Add Inventory</h3>
-                    <p>Add new items to your inventory</p>
-                </div>
-                
-                <div class="option-card" onclick="selectOption('edit')" id="editOption">
-                    <div class="option-icon">✏</div>
-                    <h3>Edit Inventory</h3>
-                    <p>Modify existing inventory items</p>
-                </div>
-                
-                <div class="option-card" onclick="selectOption('delete')" id="deleteOption">
-                    <div class="option-icon">×</div>
-                    <h3>Delete Inventory</h3>
-                    <p>Remove items from your inventory</p>
+            <div th:if="${products != null and !products.empty}" class="products-grid">
+                <div th:each="product : ${products}" class="product-card">
+                    <div class="product-name" th:text="${product.name}">Product Name</div>
+                    <div class="product-category" th:text="${product.category}">Category</div>
+                    
+                    <div class="product-info">
+                        <p><strong>Price:</strong> $<span th:text="${product.price}">0.00</span></p>
+                        <p><strong>Quantity:</strong> <span th:text="${product.quantity}">0</span></p>
+                        <p><strong>Product #:</strong> <span th:text="${product.productNumber}">000000</span></p>
+                        <p th:if="${product.useArea != null and !product.useArea.isEmpty()}">
+                            <strong>Use Area:</strong> <span th:text="${product.useArea}"></span>
+                        </p>
+                        <p th:if="${product.collection != null and !product.collection.isEmpty()}">
+                            <strong>Collection:</strong> <span th:text="${product.collection}"></span>
+                        </p>
+                    </div>
+
+                    <div class="product-actions">
+                        <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn-small btn-edit">Edit</a>
+                        <a th:href="@{/products/delete/{id}(id=${product.id})}" class="btn-small btn-delete">Delete</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="action-section">
-                <div id="actionButtons" class="hidden">
-                    <p style="margin-bottom: 1rem; color: #e0e0e0;">
-                        <span id="actionDescription">Please select an option above to continue.</span>
-                    </p>
-                    <a href="#" class="btn" id="proceedBtn">Proceed</a>
-                    <button onclick="resetSelection()" class="btn btn-secondary">Reset Selection</button>
-                </div>
+            <div th:if="${products == null or products.empty}" class="no-products">
+                <h3>No Products Found</h3>
+                <p>You haven't added any products to your inventory yet.</p>
+                <p><a href="/products/add" class="btn" style="margin-top: 1rem;">Add Your First Product</a></p>
             </div>
         </div>
     </div>
@@ -174,31 +206,5 @@
     <footer class="footer">
         <p>&copy; 2025 3DeDeck. All rights reserved. | Precision 3D Printing Solutions</p>
     </footer>
-
-    <script>
-        function selectOption(action) {
-            console.log('selectOption called with action:', action);
-            
-            // Immediately navigate to the selected page
-            switch(action) {
-                case 'add':
-                    window.location.href = '/products/add';
-                    break;
-                case 'edit':
-                    window.location.href = '/products/edit';
-                    break;
-                case 'delete':
-                    window.location.href = '/products/delete';
-                    break;
-                default:
-                    console.log('Unknown action:', action);
-            }
-        }
-
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Manage page loaded successfully');
-        });
-    </script>
 </body>
 </html>
