@@ -10,6 +10,8 @@ import com.gcu.data.entity.ProductEntity;
 import com.gcu.data.entity.UserEntity;
 import com.gcu.model.LoginModel;
 import com.gcu.model.CategoryModel;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 
 
@@ -20,30 +22,33 @@ public class LoginService
     @Autowired 
     private UserDataService userDataService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    public boolean authenticateUser(LoginModel loginModel) 
-    {
-        return "admin".equals(loginModel.getUsername()) && 
-               "Admin123!".equals(loginModel.getPassword());
+    public boolean registerUser(LoginModel loginModel) {
+    try {
+        System.out.println("******* DEBUG: Starting user registration *******");
+        System.out.println("Username: " + loginModel.getUsername());
+        System.out.println("Email: " + loginModel.getEmail());
+        System.out.println("First Name: " + loginModel.getFirstName());
+        
+        UserEntity user = new UserEntity();
+        user.setUsername(loginModel.getUsername());
+        user.setPassword(passwordEncoder.encode(loginModel.getPassword()));
+        user.setFirstName(loginModel.getFirstName());
+        user.setLastName(loginModel.getLastName());
+        user.setEmail(loginModel.getEmail());
+        user.setPhone(loginModel.getPhone());
+        
+        System.out.println("******* DEBUG: User entity created, calling userDataService.create() *******");
+        boolean result = userDataService.create(user);
+        System.out.println("******* DEBUG: userDataService.create() returned: " + result);
+        
+        return result;
+    } catch (Exception e) {
+        System.out.println("******* ERROR in registerUser: " + e.getMessage());
+        e.printStackTrace();
+        return false;
     }
-    
-    public boolean registerUser(LoginModel loginModel) 
-    {
-        try 
-        {
-            UserEntity user = new UserEntity();
-            user.setUsername(loginModel.getUsername());
-            user.setPassword(loginModel.getPassword());
-            user.setFirstName(loginModel.getFirstName());
-            user.setLastName(loginModel.getLastName());
-            user.setEmail(loginModel.getEmail());
-            user.setPhone(loginModel.getPhone());
-            
-            return userDataService.create(user);
-        } catch (Exception e) 
-        {
-            e.printStackTrace();
-            return false;
-        }
-    }
+}
 }

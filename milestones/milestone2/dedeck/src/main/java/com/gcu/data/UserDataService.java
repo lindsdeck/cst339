@@ -99,8 +99,7 @@ public class UserDataService implements DataAccessInterface<UserEntity>
         public UserEntity findByUsername(String username)
         {
             try{
-                Optional<UserEntity> user = userRepository.findByUsername(username);
-                return user.orElse(null);
+                return userRepository.findByUsername(username);
             }
             catch (Exception e)
             {

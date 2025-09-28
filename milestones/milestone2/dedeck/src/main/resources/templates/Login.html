@@ -114,23 +114,29 @@
                 <button class="auth-tab" id="registerTab" onclick="switchTab('register')">Register</button>
             </div>
 
+            <!-- Error/Success Messages -->
+            <div th:if="${param.error}" class="error" style="margin-bottom: 1rem; text-align: center;">
+                Invalid username or password. Please try again.
+            </div>
+            <div th:if="${param.logout}" style="color: #4CAF50; margin-bottom: 1rem; text-align: center;">
+                You have been successfully logged out.
+            </div>
+
             <!-- Sign In Form -->
-            <form class="auth-form" id="signinForm" th:action="@{/login/doLogin}" method="post" th:object="${loginModel}">
+            <form class="auth-form" id="signinForm" th:action="@{/login}" method="post">
                 <div class="form-group">
-                    <label class="form-label" for="signinUsername">Username</label>
-                    <input type="text" class="form-input" id="signinUsername" name="username" th:field="*{username}" required>
-                    <div th:if="${#fields.hasErrors('username')}" class="error" th:errors="*{username}"></div>
+                     <label class="form-label" for="signinUsername">Username</label>
+                     <input type="text" class="form-input" id="signinUsername" name="username" required>
                 </div>
-                <div class="form-group">
-                    <label class="form-label" for="signinPassword">Password</label>
-                    <input type="password" class="form-input" id="signinPassword" name="password" th:field="*{password}" required>
-                    <div th:if="${#fields.hasErrors('password')}" class="error" th:errors="*{password}"></div>
-                </div>
-                <button type="submit" class="form-submit">Sign In</button>
+                 <div class="form-group">
+                     <label class="form-label" for="signinPassword">Password</label>
+                     <input type="password" class="form-input" id="signinPassword" name="password" required>
+                 </div>
+                 <button type="submit" class="form-submit">Sign In</button>
             </form>
 
             <!-- Register Form -->
-            <form class="auth-form hidden" id="registerForm" th:action="@{/login/doRegister}" method="post" th:object="${loginModel}">
+            <form class="auth-form hidden" id="registerForm" th:action="@{/register}" method="post" th:object="${loginModel}">
                 <div class="form-group">
                     <label class="form-label" for="registerFirstName">First Name</label>
                     <input type="text" class="form-input" id="registerFirstName" name="firstName" th:field="*{firstName}" required>

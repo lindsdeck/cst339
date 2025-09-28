@@ -1,14 +1,14 @@
-# CST339 - Milestone 5 - 
+# CST339 - Milestone 6 - 
 # Lindsey DeDecker
-### September 24, 2025
+### September 28, 2025
 
 
 
 ## 3DeDeck
-An asthetically pleasing online storefront for 3D printed items within 3 categories - Fun, Practical and collectibles.  3DeDeck's website will be full functional with login capabilities, inventory changing capabilities, a chopping cart and order history. 
+An asthetically pleasing online storefront for 3D printed items within 3 categories - Fun, Practical and collectibles.  3DeDeck's website is fully functional with Spring Security authentication, comprehensive inventory management capabilities, and complete CRUD operations for products.
 
 ## Video Cast Links
-https://youtu.be/WDT6AbD_X1E
+https://www.loom.com/share/02f11b1fb7e54195960e31815cc86c0c?sid=85d261aa-4ee7-4626-942f-4885038c2f96
 
 ## Milestone Code Link
 https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
@@ -22,6 +22,10 @@ https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
     - Spring MVC waws used for development.
     - Title '3DeDeck' is in for store.  Logo is in the works and for now is the name of the store
     - Refactored to use consistent styling and themes across all pages for final presentation
+    - Implemented Spring Security framework for comprehensice application security
+    - All pages except login and registration now protected and require authentication
+    - Automatic redirection to login page for unauthenticated access attempts
+    
 
 - Registration Mode
     - A user can register on the loaded home page.
@@ -31,12 +35,21 @@ https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
     - All data entered must be valid before registering.
     - Upon registering, the user is prompted to login.
     - Registration now successfully saves users to MySQL database.
+    - Password encryption using BCrypt encoding for secure storage
+    - Database schema updated to support encrypted passwords
+    - Form validation with Spring Security integration
+
 
 - Login Mode
     - user must login with valid username and password.
     - Refactored to sue Spring Data JPA with database authentication.
     - Uses same repository and DAO patterns as registration module
     - Upon logging in, the user is brought to the main product page of the store front. 
+    - Completely refractored to user Spring Security framework
+    - Form-based authentication with custom UserDetailsService
+    - Session management with proper login state persistence
+    - Secure logout functionality with session invalidation
+    - Error handling with user-friendly security messages
 
 - Product Display
     -Category-based product filtering
@@ -44,6 +57,7 @@ https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
     - All Products view with category grouping
     - Product search functionality
     - Real time updates of products are displayed
+    -All products page now require authentication to access
 
 - Manage Product Page
     - Admin users can manage products by:
@@ -51,6 +65,10 @@ https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
         - deleteing products
         - adjusting aspects of the product - price, quanitty, description.
         - All adjustments are adjusted instantly and reflected within the database and the display of products
+    - Complete product management dashboard with individual edit/delete buttons
+    - Pre-populated edit forms with existing product details
+    - Confirmation workflows for product deletion
+    - All management functions protected by Spring Security Authentication
 
 ## Technical Approach
 - Spring security for login authorization.
@@ -77,6 +95,7 @@ https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
 - HTML, CSS and JavaScript
 - Maven
 - Java
+- Spring Security with BCrypt password encoding
 
 ## Database Schema
 - Product Table
@@ -135,6 +154,8 @@ https://github.com/lindsdeck/cst339/tree/main/milestones/milestone2/dedeck
     - adding new items to database
     - Editing current inventory
     - Delete inventory
+- High level security in place 
+    - users must be authenticated to view products and edit them
 
 ## User Interface Flow Diagram
 User will first see the home page with a toggle between login and registration.  If the user successfully logs in, they will see the product page.  If the login is unsuccessful, they will  be prompted to tr yagain.  If the users attempts to register unsuccessfully, they will be prompted to try agian.  If they are successful, they will be prompted to login. The user registration information will also be saved within the database. 
@@ -214,3 +235,5 @@ This project is solo.  Below is my plan for each week as it works with my schedu
 - https://spring.io/projects/spring-data-jpa
 
 - Information within Activity assignments in CST339
+
+- https://www.geeksforgeeks.org/advance-java/spring-security-integration-with-spring-boot/
